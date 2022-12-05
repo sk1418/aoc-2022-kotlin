@@ -23,3 +23,9 @@ fun chkTestInput(actual: Number, expect: Number, part: String) {
         check(actual == expect)
     }
 }
+
+fun chkTestInput(actual: String, expect: String, part: String) {
+    println("[TEST::$part]: $actual").also {
+        check(actual == expect)
+    }
+}
