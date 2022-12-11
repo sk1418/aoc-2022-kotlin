@@ -25,7 +25,7 @@ fun main() {
     println("[Part2 - Test]:")
     part2(testInput)
     println("\n[Part2]:")
-    part2(input)
+    part2(input) //PLPAFBCL
 }
 
 fun getCycleResultMapping(input: List<String>): MutableList<Int> {
