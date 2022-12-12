@@ -7,8 +7,8 @@ fun main() {
     val testInput2 = readTestInput("$today-part2")
 
     fun part1(input: List<String>): Int {
-        val head = Knot(Point(0, 0))
-        val tail = Knot(Point(0, 0))
+        val head = Knot(Point09(0, 0))
+        val tail = Knot(Point09(0, 0))
         toMoves(input).forEach { m ->
             head.mv(m)
             tail.follow(head)
@@ -17,7 +17,7 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        val knots = (1..10).map { Knot(Point(0, 0)) }
+        val knots = (1..10).map { Knot(Point09(0, 0)) }
         toMoves(input).forEach { m ->
             knots[0].mv(m)
             for (i in 1..9) {
@@ -40,8 +40,8 @@ fun toMoves(input: List<String>): MutableList<String> {
     return moves
 }
 
-data class Knot(var point: Point) {
-    val mvHist: MutableList<Point> = mutableListOf(point)
+data class Knot(var point: Point09) {
+    val mvHist: MutableList<Point09> = mutableListOf(point)
     fun mv(direction: String) {
         point = when (direction) {
             "L" -> point.left()
@@ -61,16 +61,16 @@ data class Knot(var point: Point) {
             && (kotlin.math.abs(head.point.x - point.x) > 1 || kotlin.math.abs(head.point.y - point.y) > 1) -> {
             val newX = point.x + if (head.point.x > point.x) 1 else -1
             val newY = point.y + if (head.point.y > point.y) 1 else -1
-            point = Point(newX, newY).also { mvHist += it }
+            point = Point09(newX, newY).also { mvHist += it }
         }
         else -> {}
     }
 }
 
 
-data class Point(val x: Int, val y: Int) {
-    fun right() = Point(x + 1, y)
-    fun left() = Point(x - 1, y)
-    fun down() = Point(x, y - 1)
-    fun up() = Point(x, y + 1)
+data class Point09(val x: Int, val y: Int) {
+    fun right() = Point09(x + 1, y)
+    fun left() = Point09(x - 1, y)
+    fun down() = Point09(x, y - 1)
+    fun up() = Point09(x, y + 1)
 }
