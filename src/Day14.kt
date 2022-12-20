@@ -19,7 +19,7 @@ fun main() {
     fun part2(input: List<String>): Int {
         initEverything(input)
         maxY += 2
-        while (Pos(500, 0) !in posMap) sandDrop2()
+        while (Pos14(500, 0) !in posMap) sandDrop2()
         return cnt
     }
 
@@ -31,7 +31,7 @@ fun main() {
 }
 
 var cnt = 0
-val posMap = mutableSetOf<Pos>()
+val posMap = mutableSetOf<Pos14>()
 var maxY = 0
 
 fun initEverything(input: List<String>) {
@@ -40,27 +40,27 @@ fun initEverything(input: List<String>) {
     input.forEach { line ->
         line.split(" -> ").windowed(2).forEach {
             addRockLine(
-                it[0].split(",").let { xy -> Pos(xy[0].toInt(), xy[1].toInt()) },
-                it[1].split(",").let { xy -> Pos(xy[0].toInt(), xy[1].toInt()) })
+                it[0].split(",").let { xy -> Pos14(xy[0].toInt(), xy[1].toInt()) },
+                it[1].split(",").let { xy -> Pos14(xy[0].toInt(), xy[1].toInt()) })
         }
     }
     maxY = posMap.maxOf { p -> p.y }
 }
 
-private fun addRockLine(pos1: Pos, pos2: Pos) {
+private fun addRockLine(pos1: Pos14, pos2: Pos14) {
     if (pos1.x == pos2.x) {
         (min(pos1.y, pos2.y)..max(pos1.y, pos2.y)).forEach {
-            posMap += Pos(pos1.x, it)
+            posMap += Pos14(pos1.x, it)
         }
     } else {
         (min(pos1.x, pos2.x)..max(pos1.x, pos2.x)).forEach {
-            posMap += Pos(it, pos1.y)
+            posMap += Pos14(it, pos1.y)
         }
     }
 }
 
-fun sandDrop(): Pos {
-    var p = Pos(500, 0)
+fun sandDrop(): Pos14 {
+    var p = Pos14(500, 0)
     while (p.y <= maxY && p !in posMap) {
         p = p.drop()
     }
@@ -68,15 +68,15 @@ fun sandDrop(): Pos {
 }
 
 fun sandDrop2() {
-    var p = Pos(500, 0)
+    var p = Pos14(500, 0)
     while (p !in posMap) {
         p = p.drop2()
     }
 }
 
-data class Pos(val x: Int, val y: Int) {
+data class Pos14(val x: Int, val y: Int) {
 
-    fun drop2(): Pos {
+    fun drop2(): Pos14 {
         return drop().also {
             if (it !in posMap && it.y == maxY - 1) {
                 posMap += it
@@ -85,7 +85,7 @@ data class Pos(val x: Int, val y: Int) {
         }
     }
 
-    fun drop(): Pos = listOf(Pos(x, y + 1), Pos(x - 1, y + 1), Pos(x + 1, y + 1))
+    fun drop(): Pos14 = listOf(Pos14(x, y + 1), Pos14(x - 1, y + 1), Pos14(x + 1, y + 1))
         .firstOrNull { it !in posMap } ?: this.also {
         cnt++
         posMap += it
